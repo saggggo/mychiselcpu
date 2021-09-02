@@ -32,8 +32,11 @@ class Core extends Module {
     val imm_s = Cat(inst(31, 25), inst(11, 7))
     val imm_s_sext =Cat(Fill(20, imm_s(11)), imm_s)
     val alu_out = MuxCase(0.U(WORD_LEN.W), Seq(
-        (inst === LW) -> (rs1_data + imm_i_sext),
-        (inst === SW) -> (rs1_data + imm_s_sext)
+        (inst === LW)   -> (rs1_data + imm_i_sext),
+        (inst === SW)   -> (rs1_data + imm_s_sext),
+        (inst === ADD)  -> (rs1_data + rs2_data),
+        (inst === ADDI) -> (rs1_data + imm_i_sext),
+        (inst === SUB)  -> (rs1_data - rs2_data)
     ))
 
     io.dmem.addr := alu_out
