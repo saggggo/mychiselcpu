@@ -175,7 +175,7 @@ class Core extends Module {
     when(rf_wen === REN_S) {
         regfile(wb_addr) := wb_data
     }
-    io.exit := (pc_reg === 0x44.U(WORD_LEN.W))
+    io.exit := (inst === UNIMP)
     io.gp := regfile(3)
     // debug
     printf(p"pc_reg     : 0x${Hexadecimal(pc_reg)}\n")
